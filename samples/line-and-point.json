@@ -1,0 +1,16 @@
+{
+  "case_id": "v9.uniform_line_and_point",
+  "cuts": [1, 1],
+  "pieces": [
+    {"name": "falling", "vertices": [[0, 0], [2, 0], [0, 2]], "mass": "1/2"},
+    {"name": "rising", "vertices": [[0, 0], [2, 0], [0, 2]], "mass": "1/2"},
+    {"name": "point", "vertices": [[0, 0], [2, 0], [0, 2]], "mass": "1"}
+  ],
+  "revisions": [
+    {"calibrations": {
+      "falling": [[0, 0, 1], [-1, 0, 2]],
+      "rising": [[0, 0, 1], [1, 0, 0]],
+      "point": [[0, 0, 1], [0, 0, 1]]
+    }, "expected": ["0", "1/2", "0", "3/2"]}
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "case_id": "v6.folded_quartets",
+  "cuts": [1, 1],
+  "pieces": [{"name": "panel", "vertices": [[0, 0], [2, 0], [0, 2]], "mass": "1"}],
+  "revisions": [
+    {"calibrations": {"panel": [[1, 0, 0], [0, 0, 0]]}, "expected": ["3/4", "1/4", "0", "0"]},
+    {"calibrations": {"panel": [[-1, 0, 2], [0, 0, 0]]}, "expected": ["1/4", "3/4", "0", "0"]}
+  ]
+}
