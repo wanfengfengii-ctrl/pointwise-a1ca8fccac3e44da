@@ -7,7 +7,7 @@ from station.issue_payload import MassUnit
 from station.revisions import Revision
 
 
-def _project_mass(vertices, mass):
+def project_mass(vertices, mass):
     ordered = tuple(sorted(vertices))
     if twice_signed_area(ordered):
         return MassUnit('area', ordered, mass)
@@ -30,10 +30,14 @@ def _project_mass(vertices, mass):
     return MassUnit('line', (start, end), mass, tuple(spans))
 
 
+# Kept for callers of the original private name.
+_project_mass = project_mass
+
+
 def freeze_revision(batch: Batch, revision: Revision):
     if batch.id != revision.batch_id:
         raise ValueError('revision belongs to another batch')
     return tuple(
-        _project_mass(map_vertices(piece.triangle, revision.calibrations[piece.name]), piece.mass)
+        project_mass(map_vertices(piece.triangle, revision.calibrations[piece.name]), piece.mass)
         for piece in batch.pieces
     )

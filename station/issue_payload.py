@@ -43,3 +43,31 @@ def encode_station_piece(station_id, issue_id, batch_id, revision_id, body):
         'body_sha256': sha256_text(canonical_json(body)),
         'body': body,
     })
+
+
+def encode_joint_body(pieces):
+    """Build the anonymous pair-evidence body.
+
+    ``pieces`` yields ``(mass, old_points, new_points)`` triples.  The point
+    triples are the millimetre images of the source triangle vertices in
+    stored order, so the center can replay the projection for either edition
+    and can evaluate the joint transfer for any cuts.  Only millimetre
+    geometry and weighed mass leave the station: piece names, source
+    coordinates and calibration parameters stay behind.
+    """
+    units = []
+    total = Fraction(0)
+    for mass, old_points, new_points in pieces:
+        units.append({
+            'mass': str(mass),
+            'old': [[str(x), str(y)] for x, y in old_points],
+            'new': [[str(x), str(y)] for x, y in new_points],
+        })
+        total += mass
+    # Canonical order depends only on emitted evidence, not on station piece names.
+    return {'total_mass': str(total), 'units': sorted(units, key=canonical_json)}
+
+
+def encode_pair_piece(parents, body):
+    signed = {'parents': parents, 'body': body}
+    return canonical_json({**signed, 'sha256': sha256_text(canonical_json(signed))})
